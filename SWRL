@@ -1,0 +1,27 @@
+### Action-Energy Requirement
+# Every action needs energy
+Action(?a) ^ notExists(?a, requiresEnergyType, ?e) -> needsEnergy(?a)
+
+### Energy Conservation
+# Energy input equals energy output
+EnergyInput(?ei) ^ EnergyOutput(?eo) ^ swrlb:equal(?ei, ?eo) -> energyConserved(true)
+
+### State Transition Axiom
+# If an entity causes a state transition from stateBefore to stateAfter, entity has stateAfter
+causesStateTransition(?entity, ?stateBefore, ?stateAfter) -> hasState(?entity, ?stateAfter)
+
+### Energy Balance Constraint
+# Sum of input energies equals sum of output energies
+sumInputEnergy(?sumIn) ^ sumOutputEnergy(?sumOut) ^ swrlb:equal(?sumIn, ?sumOut) -> balancedEnergy(true)
+
+### System State Stability
+# If rate of state change is less than or equal to threshold, system is stable
+stateChangeRate(?rate) ^ swrlb:lessThanOrEqual(?rate, threshold) -> systemStable(true)
+
+### Action Requirement Minimum
+# Actions requiring resource ?r meet minimum if resource amount >= minimum required
+Action(?a) ^ requiresResource(?a, ?r) ^ hasResourceAmount(?r, ?amt) ^ swrlb:greaterThanOrEqual(?amt, minRequired) -> meetsRequirement(?a)
+
+### Another Energy Conservation
+# A redundant energy principle (for example, energy conservation verified twice)
+EnergyInput(?ei) ^ EnergyOutput(?eo) ^ swrlb:equal(?ei, ?eo) -> redundantEnergyCheck(true)
